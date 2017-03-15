@@ -91,7 +91,7 @@ int_T main(int_T argc, const char *argv[])
   uln_rti_qpon_linux_U.x0[1] = 0.022f;
   uln_rti_qpon_linux_U.x0[2] = 0.0f;
   uln_rti_qpon_linux_U.x0[3] = 0.001f;
-  uln_rti_qpon_linux_U.x0[4] = 523.0f;
+  uln_rti_qpon_linux_U.x0[4] = 423.0f;
 
   /* Attach rt_OneStep to a timer or interrupt service routine with
    * period 0.1 seconds (the model's base sample time) here.  The

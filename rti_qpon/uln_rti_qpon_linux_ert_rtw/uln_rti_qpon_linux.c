@@ -1651,7 +1651,7 @@ void uln_rti_qpon_linux_step(void)
   /*  Run IRK for : z_i in z \forall i \in N */
   /*  This for loop could be parallelised */
   /* '<S3>:1:88' */
-#pragma omp parallel for schedule(static, 5) \
+#pragma omp parallel for schedule(static) \
     shared(rtb_znew, dgdz, uln_rti_qpon_linux_DW) \
     private(i_0, i_1, i_2, i_3, i_4, tmp, tmp_0, tmp_2, j) \
     firstprivate(blk_i_nx, z_irk, k_irk, dk_irk, rem_its, JFk, JFz, \
