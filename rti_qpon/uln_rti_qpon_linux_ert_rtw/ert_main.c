@@ -113,7 +113,7 @@ int_T main(int_T argc, const char *argv[])
             uln_rti_qpon_linux_Y.uOpt[1],
             uln_rti_qpon_linux_Y.status,
             uln_rti_qpon_linux_Y.obj);
-    sleep(1);
+    sleep(.1);
   }
 
   /* Disable rt_OneStep() here */
