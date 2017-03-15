@@ -20,6 +20,8 @@
 #include "rtwtypes.h"
 #include <omp.h>
 
+#define CONTROL_TIMESTEP 0.25 /* In seconds */
+
 extern ExtU_uln_rti_qpon_linux_T uln_rti_qpon_linux_U;
 extern ExtY_uln_rti_qpon_linux_T uln_rti_qpon_linux_Y;
 
@@ -107,13 +109,15 @@ int_T main(int_T argc, const char *argv[])
     rt_OneStep();
     tend = omp_get_wtime();
 
-    printf("Time taken %.2f milliseconds\n", (tend-tstart)*1e3);
-    printf("uOpt = [%f %f], status=%d, obj=%.2f\n", 
+    printf("Time taken %.2f milliseconds (%.1f%%)\n", 
+            (tend-tstart)*1e3,
+            (tend-tstart)/CONTROL_TIMESTEP*100);
+    printf("uOpt = [%.4f %.0f], status=%d, obj=%.2f\n", 
             uln_rti_qpon_linux_Y.uOpt[0],
             uln_rti_qpon_linux_Y.uOpt[1],
             uln_rti_qpon_linux_Y.status,
             uln_rti_qpon_linux_Y.obj);
-    sleep(.25);
+    sleep(CONTROL_TIMESTEP);
   }
 
   /* Disable rt_OneStep() here */
