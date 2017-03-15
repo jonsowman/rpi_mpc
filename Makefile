@@ -29,7 +29,7 @@ INCLUDE_DIRS = -I$(ULN_DIR) -I$(EMBEDDED_CODER)/extern/include -I$(EMBEDDED_CODE
 
 # Enumerate .c sources
 ULN_SRC = $(wildcard $(ULN_DIR)/*.c)
-ERT_SRC = $(wildcard $(ERT_DIR)/*.c)
+ERT_SRC = $(filter-out $(ERT_DIR)/ert_main.c, $(wildcard $(ERT_DIR)/*.c))
 SOURCES = $(ERT_SRC) $(ULN_SRC)
 OBJS = $(SOURCES:.c=.o)
 
