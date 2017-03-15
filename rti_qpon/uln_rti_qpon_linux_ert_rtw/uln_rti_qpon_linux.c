@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'uln_rti_qpon_linux'.
  *
- * Model version                  : 1.260
+ * Model version                  : 1.266
  * Simulink Coder version         : 8.7 (R2014b) 08-Sep-2014
- * C/C++ source code generated on : Wed Mar 15 09:26:17 2017
+ * C/C++ source code generated on : Wed Mar 15 13:27:36 2017
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -19,6 +19,9 @@
 /* Named constants for MATLAB Function: '<Root>/RTI_prepare' */
 #define uln_rti_qpon_linux_nu          (2.0)
 #define uln_rti_qpon_linux_sz          (7.0)
+
+/* Block signals (auto storage) */
+B_uln_rti_qpon_linux_T uln_rti_qpon_linux_B;
 
 /* Block states (auto storage) */
 DW_uln_rti_qpon_linux_T uln_rti_qpon_linux_DW;
@@ -35,8 +38,8 @@ RT_MODEL_uln_rti_qpon_linux_T *const uln_rti_qpon_linux_M =
   &uln_rti_qpon_linux_M_;
 
 /* Forward declaration for local functions */
-static void uln_rti_qpon_linu_multiply_LtDL(const real_T L[250], const real_T D
-  [625], real_T Ac[100], real_T LtD[250]);
+static void uln_rti_qpon_linu_multiply_LtDL(const real_T L[4000], const real_T
+  D[10000], real_T Ac[1600], real_T LtD[4000]);
 static real_T uln_rti_qpon_linux_rdivide(real_T x, real_T y);
 static void uln_rti_qpon_linux_JFz_mfcn(const real_T in1[5], const real_T in3[7],
   const real_T in4[15], real_T h1, real_T JFz[105]);
@@ -48,8 +51,8 @@ static void uln_rti_qpon_linux_F_mfcn(const real_T in1[5], const real_T in2[2],
 static void uln_rti_qpon_linux_mldivide(const real_T A[225], real_T B[15]);
 
 /* Function for MATLAB Function: '<Root>/RTI_prepare' */
-static void uln_rti_qpon_linu_multiply_LtDL(const real_T L[250], const real_T D
-  [625], real_T Ac[100], real_T LtD[250])
+static void uln_rti_qpon_linu_multiply_LtDL(const real_T L[4000], const real_T
+  D[10000], real_T Ac[1600], real_T LtD[4000])
 {
   int32_T k;
   int32_T i;
@@ -59,22 +62,22 @@ static void uln_rti_qpon_linu_multiply_LtDL(const real_T L[250], const real_T D
 
   /* UNTITLED Summary of this function goes here */
   /*    Detailed explanation goes here */
-  memset(&Ac[0], 0, 100U * sizeof(real_T));
-  memset(&LtD[0], 0, 250U * sizeof(real_T));
-  for (i = 0; i < 10; i++) {
+  memset(&Ac[0], 0, 1600U * sizeof(real_T));
+  memset(&LtD[0], 0, 4000U * sizeof(real_T));
+  for (i = 0; i < 40; i++) {
     c_j = i * (int32_T)5.0;
-    for (c = 0; c <= 24 - c_j; c++) {
+    for (c = 0; c <= 99 - c_j; c++) {
       b_k = c_j + c;
-      LtD[i + 10 * b_k] = L[25 * i + b_k] * D[25 * b_k + b_k];
+      LtD[i + 40 * b_k] = L[100 * i + b_k] * D[100 * b_k + b_k];
     }
   }
 
-  for (i = 0; i < 10; i++) {
-    for (c_j = 0; c_j < 10; c_j++) {
+  for (i = 0; i < 40; i++) {
+    for (c_j = 0; c_j < 40; c_j++) {
       c = c_j * (int32_T)5.0;
-      for (b_k = 0; b_k <= 24 - c; b_k++) {
+      for (b_k = 0; b_k <= 99 - c; b_k++) {
         k = c + b_k;
-        Ac[i + 10 * c_j] += LtD[10 * k + i] * L[25 * c_j + k];
+        Ac[i + 40 * c_j] += LtD[40 * k + i] * L[100 * c_j + k];
       }
     }
   }
@@ -1507,52 +1510,49 @@ static void uln_rti_qpon_linux_mldivide(const real_T A[225], real_T B[15])
 void uln_rti_qpon_linux_step(void)
 {
   /* local block i/o variables */
-  real_T rtb_qpOASES_wrp_o1[10];
-  real_T rtb_qpOASES_wrp_o2[35];
-  real_T rtb_Ac[100];
-  real_T rtb_gl[10];
-  real_T rtb_gu[10];
-  real_T rtb_E[250];
-  real_T rtb_Bc[10];
-  real_T rtb_glA[25];
-  real_T rtb_guA[25];
-  real_T B[40];
+  real_T rtb_qpOASES_wrp_o1[40];
+  real_T rtb_qpOASES_wrp_o2[140];
+  real_T rtb_gl[40];
+  real_T rtb_gu[40];
+  real_T rtb_Bc[40];
+  real_T rtb_glA[100];
+  real_T rtb_guA[100];
+  real_T B[145];
   int8_T rem_its;
   int8_T blk_i_nx[5];
   int8_T blk_i_nx_m1[5];
-  int8_T blk_i_nx_p1_sz[5];
-  int8_T blk_i_nx_sz[5];
+  uint8_T blk_i_nx_p1_sz[5];
+  uint8_T blk_i_nx_sz[5];
   int8_T blk_j_nu[2];
-  real_T dgdz[175];
   real_T JFk[225];
   real_T JFz[105];
   real_T k_irk[15];
   real_T dk_irk[15];
   real_T z_irk[7];
-  real_T EtQbar[250];
   int32_T i;
   int32_T j;
-  real_T rtb_w2[25];
-  real_T rtb_znew[40];
+  real_T rtb_w2[100];
+  real_T rtb_znew[145];
   real_T rtb_deltax0[5];
-  real_T rtb_d[25];
-  real_T rtb_C[125];
+  real_T rtb_d[100];
+  real_T rtb_C[500];
   real_T tmp[105];
   real_T tmp_0[15];
   int32_T i_0;
-  real_T tmp_1[400];
-  real_T EtQbar_0[10];
-  real_T tmp_2[10];
-  real_T EtQbar_1[50];
+  real_T EtQbar[40];
+  real_T tmp_1[40];
+  real_T EtQbar_0[200];
   int32_T i_1;
-  real_T EtQbar_2[10];
-  real_T rtb_w2_0[25];
-  real_T tmp_3;
+  real_T EtQbar_1[40];
+  real_T rtb_w2_0[100];
+  real_T tmp_2;
   int8_T i_2;
-  int8_T tmp_4;
-  int8_T i_3;
-  real_T dgdz_0[25];
+  uint8_T tmp_3;
+  uint8_T i_3;
+  real_T dgdz[25];
+  real_T rtb_C_0[25];
   real_T rtb_znew_0[5];
+  real_T tmp_4[10];
   int32_T i_4;
 
   /* MATLAB Function: '<Root>/RTI_prepare' incorporates:
@@ -1601,17 +1601,17 @@ void uln_rti_qpon_linux_step(void)
   /*  N */
   /*  Storage preallocation for EmbeddedCoder size determination */
   /* '<S3>:1:32' */
-  memcpy(&rtb_znew[0], &uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0], 40U * sizeof
+  memcpy(&rtb_znew[0], &uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0], 145U * sizeof
          (real_T));
 
   /* '<S3>:1:33' */
-  memset(&rtb_C[0], 0, 125U * sizeof(real_T));
+  memset(&rtb_C[0], 0, 500U * sizeof(real_T));
 
   /* '<S3>:1:34' */
-  memset(&rtb_E[0], 0, 250U * sizeof(real_T));
+  memset(&uln_rti_qpon_linux_B.E[0], 0, 4000U * sizeof(real_T));
 
   /* '<S3>:1:35' */
-  memset(&rtb_d[0], 0, 25U * sizeof(real_T));
+  memset(&rtb_d[0], 0, 100U * sizeof(real_T));
 
   /* '<S3>:1:38' */
   /*  Other allocation */
@@ -1623,7 +1623,7 @@ void uln_rti_qpon_linux_step(void)
   /* '<S3>:1:51' */
   /*  IRK allocation */
   /* '<S3>:1:62' */
-  memset(&dgdz[0], 0, 175U * sizeof(real_T));
+  memset(&uln_rti_qpon_linux_B.dgdz[0], 0, 700U * sizeof(real_T));
 
   /*  full? */
   /* '<S3>:1:63' */
@@ -1637,10 +1637,10 @@ void uln_rti_qpon_linux_step(void)
   /*  Naively: B = gn_hessian * z; */
   /*  Our Hessian is truly diagonal so we can get away with this: */
   /* '<S3>:1:81' */
-  for (i = 0; i < 40; i++) {
+  for (i = 0; i < 145; i++) {
     /* '<S3>:1:81' */
     /* '<S3>:1:82' */
-    B[i] = uln_rti_qpon_linux_ConstP.Constant12_Value[40 * i + i] *
+    B[i] = uln_rti_qpon_linux_ConstP.Constant12_Value[145 * i + i] *
       (uln_rti_qpon_linux_DW.UnitDelay_DSTATE[i] -
        uln_rti_qpon_linux_ConstP.Constant11_Value[i]);
 
@@ -1651,12 +1651,12 @@ void uln_rti_qpon_linux_step(void)
   /*  Run IRK for : z_i in z \forall i \in N */
   /*  This for loop could be parallelised */
   /* '<S3>:1:88' */
-#pragma omp parallel for schedule(static) \
-  shared(rtb_znew, dgdz, uln_rti_qpon_linux_DW) \
-  private(i_0, i_1, i_2, i_3, i_4, tmp, tmp_0, tmp_3, j) \
-  firstprivate(blk_i_nx, z_irk, k_irk, dk_irk, rem_its, JFk, JFz, \
-          rtb_deltax0)
-  for (i = 0; i < 5; i++) {
+#pragma omp parallel for schedule(static, 5) \
+    shared(rtb_znew, dgdz, uln_rti_qpon_linux_DW) \
+    private(i_0, i_1, i_2, i_3, i_4, tmp, tmp_0, tmp_2, j) \
+    firstprivate(blk_i_nx, z_irk, k_irk, dk_irk, rem_its, JFk, JFz, \
+                      rtb_deltax0)
+  for (i = 0; i < 20; i++) {
     /* '<S3>:1:88' */
     /*  Subscripts for this loop iteration */
     /* '<S3>:1:90' */
@@ -1688,17 +1688,17 @@ void uln_rti_qpon_linux_step(void)
     /* '<S3>:1:100' */
     /*  Run IRK steps to cross the shooting node */
     /* '<S3>:1:103' */
-    for (j = 0; j < 11; j++) {
+    for (j = 0; j < 2; j++) {
       /* '<S3>:1:103' */
       /*  Run Newton iterations */
       while (rem_its > 0) {
         /* '<S3>:1:105' */
-        /*  || norm(dk) > 1e-6 */
+        /*  || norm(dk_irk) > 1e-6 */
         /*  Using exact grad-F turns out to be a lot more robust and can */
         /*  use fewer Newton steps */
         /* '<S3>:1:108' */
         uln_rti_qpon_linux_JFk_mfcn(rtb_deltax0,
-          uln_rti_qpon_linux_ConstP.Constant23_Value, k_irk, 0.05, JFk);
+          uln_rti_qpon_linux_ConstP.Constant23_Value, k_irk, 0.25, JFk);
 
         /*  Find F */
         /* '<S3>:1:110' */
@@ -1707,7 +1707,7 @@ void uln_rti_qpon_linux_step(void)
         /* dk = lsq_lapack(JFk, -F); */
         /* '<S3>:1:114' */
         uln_rti_qpon_linux_F_mfcn(rtb_deltax0, *(real_T (*)[2])&z_irk[5],
-          uln_rti_qpon_linux_ConstP.Constant23_Value, k_irk, 0.05, tmp_0);
+          uln_rti_qpon_linux_ConstP.Constant23_Value, k_irk, 0.25, tmp_0);
         for (i_0 = 0; i_0 < 15; i_0++) {
           dk_irk[i_0] = -tmp_0[i_0];
         }
@@ -1729,7 +1729,7 @@ void uln_rti_qpon_linux_step(void)
       /* '<S3>:1:121' */
       /* '<S3>:1:122' */
       uln_rti_qpon_linux_JFz_mfcn(rtb_deltax0,
-        uln_rti_qpon_linux_ConstP.Constant23_Value, k_irk, 0.05, tmp);
+        uln_rti_qpon_linux_ConstP.Constant23_Value, k_irk, 0.25, tmp);
       for (i_0 = 0; i_0 < 105; i_0++) {
         JFz[i_0] = -tmp[i_0];
       }
@@ -1741,27 +1741,27 @@ void uln_rti_qpon_linux_step(void)
       /* '<S3>:1:125' */
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 7; i_4++) {
-          tmp_3 = 0.0;
+          tmp_2 = 0.0;
           for (i_1 = 0; i_1 < 15; i_1++) {
-            tmp_3 += uln_rti_qpon_linux_ConstP.Constant15_Value[5 * i_1 + i_0] *
+            tmp_2 += uln_rti_qpon_linux_ConstP.Constant15_Value[5 * i_1 + i_0] *
               JFz[15 * i_4 + i_1];
           }
 
-          dgdz[(blk_i_nx[i_0] + 25 * i_4) - 1] =
-            uln_rti_qpon_linux_ConstP.Constant17_Value[5 * i_4 + i_0] + tmp_3;
+          uln_rti_qpon_linux_B.dgdz[(blk_i_nx[i_0] + 100 * i_4) - 1] =
+            uln_rti_qpon_linux_ConstP.Constant17_Value[5 * i_4 + i_0] + tmp_2;
         }
       }
 
       /*  Reallocate */
       /* '<S3>:1:127' */
       for (i_0 = 0; i_0 < 5; i_0++) {
-        tmp_3 = 0.0;
+        tmp_2 = 0.0;
         for (i_4 = 0; i_4 < 15; i_4++) {
-          tmp_3 += uln_rti_qpon_linux_ConstP.Constant15_Value[5 * i_4 + i_0] *
+          tmp_2 += uln_rti_qpon_linux_ConstP.Constant15_Value[5 * i_4 + i_0] *
             k_irk[i_4];
         }
 
-        rtb_deltax0[i_0] += tmp_3;
+        rtb_deltax0[i_0] += tmp_2;
       }
 
       /*  Remaining */
@@ -1784,7 +1784,7 @@ void uln_rti_qpon_linux_step(void)
   /* %%%%%%%%%%%%%%% END IRK %%%%%%%%%%%%%%%%    */
   /* %%%%%%%%%%%%%%% BEGIN CONDENSING %%%%%%%%%%%%%%%% */
   /* '<S3>:1:136' */
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < 20; i++) {
     /* '<S3>:1:136' */
     /*  Subscripts for this loop iteration */
     /* '<S3>:1:138' */
@@ -1796,19 +1796,19 @@ void uln_rti_qpon_linux_step(void)
 
     /*  equiv to myMat(bs(i-1,nx):be(i-1,nx)) */
     /* '<S3>:1:140' */
-    tmp_4 = (int8_T)((1 + i) * (int32_T)uln_rti_qpon_linux_sz);
+    tmp_3 = (uint8_T)((1 + i) * (uint32_T)uln_rti_qpon_linux_sz);
 
     /*  equiv to myMat(bs(i+1,nx):be(i+1,nx)) */
     /* '<S3>:1:141' */
     /*  equiv to myMat(bs(i,nu):be(i,nu)) */
     /*  equiv to myMat(bs(i,sz):be(i,sz)) */
     /* '<S3>:1:143' */
-    i_3 = (int8_T)(i * (int32_T)uln_rti_qpon_linux_sz);
+    i_3 = (uint8_T)(i * (uint32_T)uln_rti_qpon_linux_sz);
     for (i_0 = 0; i_0 < 5; i_0++) {
       blk_i_nx[i_0] = (int8_T)((i_0 + i_2) + 1);
       blk_i_nx_m1[i_0] = (int8_T)((i_0 + rem_its) + 1);
-      blk_i_nx_p1_sz[i_0] = (int8_T)((i_0 + tmp_4) + 1);
-      blk_i_nx_sz[i_0] = (int8_T)((i_0 + i_3) + 1);
+      blk_i_nx_p1_sz[i_0] = (uint8_T)((uint32_T)(1 + i_0) + tmp_3);
+      blk_i_nx_sz[i_0] = (uint8_T)((uint32_T)(1 + i_0) + i_3);
     }
 
     /*  equiv to myMat(bs(i,sz):be(i,sz)-1) */
@@ -1819,30 +1819,31 @@ void uln_rti_qpon_linux_step(void)
       /* '<S3>:1:147' */
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          rtb_C[(blk_i_nx[i_4] + 25 * i_0) - 1] = dgdz[(25 * i_0 + blk_i_nx[i_4])
-            - 1];
+          rtb_C[(blk_i_nx[i_4] + 100 * i_0) - 1] = uln_rti_qpon_linux_B.dgdz
+            [(100 * i_0 + blk_i_nx[i_4]) - 1];
         }
       }
     } else {
       /* '<S3>:1:149' */
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          dgdz_0[i_4 + 5 * i_0] = dgdz[(25 * i_0 + blk_i_nx[i_4]) - 1];
+          dgdz[i_4 + 5 * i_0] = uln_rti_qpon_linux_B.dgdz[(100 * i_0 +
+            blk_i_nx[i_4]) - 1];
         }
       }
 
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          rtb_w2_0[i_4 + 5 * i_0] = rtb_C[(25 * i_0 + blk_i_nx_m1[i_4]) - 1];
+          rtb_C_0[i_4 + 5 * i_0] = rtb_C[(100 * i_0 + blk_i_nx_m1[i_4]) - 1];
         }
       }
 
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          rtb_C[(blk_i_nx[i_0] + 25 * i_4) - 1] = 0.0;
+          rtb_C[(blk_i_nx[i_0] + 100 * i_4) - 1] = 0.0;
           for (i_1 = 0; i_1 < 5; i_1++) {
-            rtb_C[(blk_i_nx[i_0] + 25 * i_4) - 1] += dgdz_0[5 * i_1 + i_0] *
-              rtb_w2_0[5 * i_4 + i_1];
+            rtb_C[(blk_i_nx[i_0] + 100 * i_4) - 1] += dgdz[5 * i_1 + i_0] *
+              rtb_C_0[5 * i_4 + i_1];
           }
         }
       }
@@ -1853,8 +1854,8 @@ void uln_rti_qpon_linux_step(void)
     i_0 = i * (int32_T)uln_rti_qpon_linux_nu;
     for (i_4 = 0; i_4 < 2; i_4++) {
       for (i_1 = 0; i_1 < 5; i_1++) {
-        rtb_E[(blk_i_nx[i_1] + 25 * (i_4 + i_0)) - 1] = dgdz[((5 + i_4) * 25 +
-          blk_i_nx[i_1]) - 1];
+        uln_rti_qpon_linux_B.E[(blk_i_nx[i_1] + 100 * (i_4 + i_0)) - 1] =
+          uln_rti_qpon_linux_B.dgdz[((5 + i_4) * 100 + blk_i_nx[i_1]) - 1];
       }
     }
 
@@ -1870,24 +1871,26 @@ void uln_rti_qpon_linux_step(void)
       /* '<S3>:1:156' */
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          dgdz_0[i_4 + 5 * i_0] = dgdz[(25 * i_0 + blk_i_nx[i_4]) - 1];
+          dgdz[i_4 + 5 * i_0] = uln_rti_qpon_linux_B.dgdz[(100 * i_0 +
+            blk_i_nx[i_4]) - 1];
         }
       }
 
       for (i_0 = 0; i_0 < 2; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          tmp_2[i_4 + 5 * i_0] = rtb_E[((blk_j_nu[i_0] - 1) * 25 +
-            blk_i_nx_m1[i_4]) - 1];
+          tmp_4[i_4 + 5 * i_0] = uln_rti_qpon_linux_B.E[((blk_j_nu[i_0] - 1) *
+            100 + blk_i_nx_m1[i_4]) - 1];
         }
       }
 
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 2; i_4++) {
-          rtb_E[(blk_i_nx[i_0] + 25 * (blk_j_nu[i_4] - 1)) - 1] = 0.0;
+          uln_rti_qpon_linux_B.E[(blk_i_nx[i_0] + 100 * (blk_j_nu[i_4] - 1)) - 1]
+            = 0.0;
           for (i_1 = 0; i_1 < 5; i_1++) {
-            rtb_E[(blk_i_nx[i_0] + 25 * (blk_j_nu[i_4] - 1)) - 1] = rtb_E
-              [((blk_j_nu[i_4] - 1) * 25 + blk_i_nx[i_0]) - 1] + dgdz_0[5 * i_1
-              + i_0] * tmp_2[5 * i_4 + i_1];
+            uln_rti_qpon_linux_B.E[(blk_i_nx[i_0] + 100 * (blk_j_nu[i_4] - 1)) -
+              1] = uln_rti_qpon_linux_B.E[((blk_j_nu[i_4] - 1) * 100 +
+              blk_i_nx[i_0]) - 1] + dgdz[5 * i_1 + i_0] * tmp_4[5 * i_4 + i_1];
           }
         }
       }
@@ -1907,7 +1910,8 @@ void uln_rti_qpon_linux_step(void)
       /* '<S3>:1:163' */
       for (i_0 = 0; i_0 < 5; i_0++) {
         for (i_4 = 0; i_4 < 5; i_4++) {
-          dgdz_0[i_4 + 5 * i_0] = dgdz[(25 * i_0 + blk_i_nx[i_4]) - 1];
+          dgdz[i_4 + 5 * i_0] = uln_rti_qpon_linux_B.dgdz[(100 * i_0 +
+            blk_i_nx[i_4]) - 1];
         }
       }
 
@@ -1916,14 +1920,14 @@ void uln_rti_qpon_linux_step(void)
       }
 
       for (i_0 = 0; i_0 < 5; i_0++) {
-        tmp_3 = 0.0;
+        tmp_2 = 0.0;
         for (i_4 = 0; i_4 < 5; i_4++) {
-          tmp_3 += dgdz_0[5 * i_4 + i_0] * rtb_deltax0[i_4];
+          tmp_2 += dgdz[5 * i_4 + i_0] * rtb_deltax0[i_4];
         }
 
         rtb_znew_0[i_0] = (rtb_znew[blk_i_nx_sz[i_0] - 1] -
                            uln_rti_qpon_linux_DW.UnitDelay_DSTATE[blk_i_nx_p1_sz[
-                           i_0] - 1]) + tmp_3;
+                           i_0] - 1]) + tmp_2;
       }
 
       for (i_0 = 0; i_0 < 5; i_0++) {
@@ -1940,10 +1944,10 @@ void uln_rti_qpon_linux_step(void)
   /* '<S3>:1:172' */
   /*  Bounds on states */
   /* '<S3>:1:175' */
-  for (i_0 = 0; i_0 < 25; i_0++) {
+  for (i_0 = 0; i_0 < 100; i_0++) {
     rtb_w2[i_0] = 0.0;
-    for (i_4 = 0; i_4 < 40; i_4++) {
-      rtb_w2[i_0] += uln_rti_qpon_linux_ConstP.Constant13_Value[(30 * i_4 + i_0)
+    for (i_4 = 0; i_4 < 145; i_4++) {
+      rtb_w2[i_0] += uln_rti_qpon_linux_ConstP.Constant13_Value[(105 * i_4 + i_0)
         + 5] * uln_rti_qpon_linux_DW.UnitDelay_DSTATE[i_4];
     }
   }
@@ -1956,8 +1960,9 @@ void uln_rti_qpon_linux_step(void)
   /* guA_prep = repmat(data.xmax, N, 1);% - w2tild; */
   /*  Construct the condensed Hessian and linear term */
   /*  NAIVE: Ac = E'*Qbar*E + Rbar; */
-  uln_rti_qpon_linu_multiply_LtDL(rtb_E,
-    uln_rti_qpon_linux_ConstP.Constant21_Value, rtb_Ac, EtQbar);
+  uln_rti_qpon_linu_multiply_LtDL(uln_rti_qpon_linux_B.E,
+    uln_rti_qpon_linux_ConstP.Constant21_Value, uln_rti_qpon_linux_B.Ac,
+    uln_rti_qpon_linux_B.EtQbar);
 
   /* '<S3>:1:184' */
   /*  gs = the x's in B (due to Gauss-Newton Hessian), but ignore x_N */
@@ -1966,28 +1971,29 @@ void uln_rti_qpon_linux_step(void)
   /* '<S3>:1:189' */
   /*  in fb step, do Bc_1 + Bc_2*deltax0 */
   /*  End of RTI preparation phase, now wait for feedback... */
-  for (i_0 = 0; i_0 < 100; i_0++) {
-    rtb_Ac[i_0] += uln_rti_qpon_linux_ConstP.Constant22_Value[i_0];
+  for (i_0 = 0; i_0 < 1600; i_0++) {
+    uln_rti_qpon_linux_B.Ac[i_0] +=
+      uln_rti_qpon_linux_ConstP.Constant22_Value[i_0];
   }
 
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    tmp_3 = 0.0;
-    for (i_4 = 0; i_4 < 40; i_4++) {
-      tmp_3 += uln_rti_qpon_linux_ConstP.Constant20_Value[10 * i_4 + i_0] *
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    tmp_2 = 0.0;
+    for (i_4 = 0; i_4 < 145; i_4++) {
+      tmp_2 += uln_rti_qpon_linux_ConstP.Constant20_Value[40 * i_4 + i_0] *
         uln_rti_qpon_linux_DW.UnitDelay_DSTATE[i_4];
     }
 
-    rtb_gl[i_0] = uln_rti_qpon_linux_ConstP.Constant18_Value[i_0] - tmp_3;
+    rtb_gl[i_0] = uln_rti_qpon_linux_ConstP.Constant18_Value[i_0] - tmp_2;
   }
 
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    tmp_3 = 0.0;
-    for (i_4 = 0; i_4 < 40; i_4++) {
-      tmp_3 += uln_rti_qpon_linux_ConstP.Constant20_Value[10 * i_4 + i_0] *
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    tmp_2 = 0.0;
+    for (i_4 = 0; i_4 < 145; i_4++) {
+      tmp_2 += uln_rti_qpon_linux_ConstP.Constant20_Value[40 * i_4 + i_0] *
         uln_rti_qpon_linux_DW.UnitDelay_DSTATE[i_4];
     }
 
-    rtb_gu[i_0] = uln_rti_qpon_linux_ConstP.Constant19_Value[i_0] - tmp_3;
+    rtb_gu[i_0] = uln_rti_qpon_linux_ConstP.Constant19_Value[i_0] - tmp_2;
   }
 
   /* MATLAB Function: '<Root>/RTI_feedback' incorporates:
@@ -2011,18 +2017,18 @@ void uln_rti_qpon_linux_step(void)
   }
 
   /* '<S2>:1:12' */
-  for (i_0 = 0; i_0 < 25; i_0++) {
-    tmp_3 = 0.0;
+  for (i_0 = 0; i_0 < 100; i_0++) {
+    tmp_2 = 0.0;
     for (i_4 = 0; i_4 < 5; i_4++) {
-      tmp_3 += rtb_C[25 * i_4 + i_0] * rtb_deltax0[i_4];
+      tmp_2 += rtb_C[100 * i_4 + i_0] * rtb_deltax0[i_4];
     }
 
-    rtb_guA[i_0] = (rtb_w2[i_0] + rtb_d[i_0]) + tmp_3;
+    rtb_guA[i_0] = (rtb_w2[i_0] + rtb_d[i_0]) + tmp_2;
   }
 
   /* '<S2>:1:13' */
   /* '<S2>:1:14' */
-  for (i = 0; i < 25; i++) {
+  for (i = 0; i < 100; i++) {
     rtb_glA[i] = -1.0E+20 - rtb_guA[i];
     rtb_guA[i] = uln_rti_qpon_linux_ConstP.Constant4_Value[i] - rtb_guA[i];
   }
@@ -2035,56 +2041,57 @@ void uln_rti_qpon_linux_step(void)
   /*  gs = the x's in B (due to Gauss-Newton Hessian), but ignore x_N */
   /*  similarly, gu = the u's in B */
   /* '<S2>:1:18' */
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    for (i_4 = 0; i_4 < 40; i_4++) {
-      tmp_1[i_0 + 10 * i_4] = 0.0;
-      for (i_1 = 0; i_1 < 25; i_1++) {
-        tmp_1[i_0 + 10 * i_4] += rtb_E[25 * i_0 + i_1] *
-          uln_rti_qpon_linux_ConstP.Constant13_Value[30 * i_4 + i_1];
-      }
-    }
-  }
-
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    EtQbar_0[i_0] = 0.0;
-    for (i_4 = 0; i_4 < 25; i_4++) {
-      EtQbar_0[i_0] += EtQbar[10 * i_4 + i_0] * rtb_d[i_4];
-    }
-
-    tmp_2[i_0] = 0.0;
-    for (i_4 = 0; i_4 < 40; i_4++) {
-      tmp_2[i_0] += tmp_1[10 * i_4 + i_0] * B[i_4];
-    }
-  }
-
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    for (i_4 = 0; i_4 < 5; i_4++) {
-      EtQbar_1[i_0 + 10 * i_4] = 0.0;
-      for (i_1 = 0; i_1 < 25; i_1++) {
-        EtQbar_1[i_0 + 10 * i_4] += EtQbar[10 * i_1 + i_0] * rtb_C[25 * i_4 +
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    for (i_4 = 0; i_4 < 145; i_4++) {
+      uln_rti_qpon_linux_B.dv0[i_0 + 40 * i_4] = 0.0;
+      for (i_1 = 0; i_1 < 100; i_1++) {
+        uln_rti_qpon_linux_B.dv0[i_0 + 40 * i_4] += uln_rti_qpon_linux_B.E[100 *
+          i_0 + i_1] * uln_rti_qpon_linux_ConstP.Constant13_Value[105 * i_4 +
           i_1];
       }
     }
   }
 
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    tmp_3 = 0.0;
-    for (i_4 = 0; i_4 < 40; i_4++) {
-      tmp_3 += uln_rti_qpon_linux_ConstP.Constant20_Value[10 * i_4 + i_0] *
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    EtQbar[i_0] = 0.0;
+    for (i_4 = 0; i_4 < 100; i_4++) {
+      EtQbar[i_0] += uln_rti_qpon_linux_B.EtQbar[40 * i_4 + i_0] * rtb_d[i_4];
+    }
+
+    tmp_1[i_0] = 0.0;
+    for (i_4 = 0; i_4 < 145; i_4++) {
+      tmp_1[i_0] += uln_rti_qpon_linux_B.dv0[40 * i_4 + i_0] * B[i_4];
+    }
+  }
+
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    for (i_4 = 0; i_4 < 5; i_4++) {
+      EtQbar_0[i_0 + 40 * i_4] = 0.0;
+      for (i_1 = 0; i_1 < 100; i_1++) {
+        EtQbar_0[i_0 + 40 * i_4] += uln_rti_qpon_linux_B.EtQbar[40 * i_1 + i_0] *
+          rtb_C[100 * i_4 + i_1];
+      }
+    }
+  }
+
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    tmp_2 = 0.0;
+    for (i_4 = 0; i_4 < 145; i_4++) {
+      tmp_2 += uln_rti_qpon_linux_ConstP.Constant20_Value[40 * i_4 + i_0] *
         B[i_4];
     }
 
-    EtQbar_2[i_0] = (EtQbar_0[i_0] + tmp_2[i_0]) + tmp_3;
+    EtQbar_1[i_0] = (EtQbar[i_0] + tmp_1[i_0]) + tmp_2;
   }
 
   /* MATLAB Function: '<Root>/RTI_feedback' */
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    EtQbar_0[i_0] = 0.0;
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    EtQbar[i_0] = 0.0;
     for (i_4 = 0; i_4 < 5; i_4++) {
-      EtQbar_0[i_0] += EtQbar_1[10 * i_4 + i_0] * rtb_deltax0[i_4];
+      EtQbar[i_0] += EtQbar_0[40 * i_4 + i_0] * rtb_deltax0[i_4];
     }
 
-    rtb_Bc[i_0] = EtQbar_2[i_0] + EtQbar_0[i_0];
+    rtb_Bc[i_0] = EtQbar_1[i_0] + EtQbar[i_0];
   }
 
   /*  qpOASES_sequence('i', prep.Ac, Bc, prep.E, prep.gl, prep.gu, glA, guA, opts); */
@@ -2093,11 +2100,12 @@ void uln_rti_qpon_linux_step(void)
    *  Constant: '<Root>/Constant9'
    *  Constant: '<Root>/Constant10'
    */
-  qpOASES_uln_run( (real_T*)&rtb_Ac[0], (real_T*)&rtb_Bc[0], (real_T*)&rtb_E[0],
-                  (real_T*)&rtb_gl[0], (real_T*)&rtb_gu[0], (real_T*)&rtb_glA[0],
-                  (real_T*)&rtb_guA[0], (int32_T)10, (int32_T)25,
-                  &rtb_qpOASES_wrp_o1[0], &rtb_qpOASES_wrp_o2[0],
-                  &uln_rti_qpon_linux_Y.obj, &uln_rti_qpon_linux_Y.status);
+  qpOASES_uln_run( (real_T*)&uln_rti_qpon_linux_B.Ac[0], (real_T*)&rtb_Bc[0],
+                  (real_T*)&uln_rti_qpon_linux_B.E[0], (real_T*)&rtb_gl[0],
+                  (real_T*)&rtb_gu[0], (real_T*)&rtb_glA[0], (real_T*)&rtb_guA[0],
+                  (int32_T)40, (int32_T)100, &rtb_qpOASES_wrp_o1[0],
+                  &rtb_qpOASES_wrp_o2[0], &uln_rti_qpon_linux_Y.obj,
+                  &uln_rti_qpon_linux_Y.status);
 
   /* MATLAB Function: '<Root>/RTI_expand' incorporates:
    *  Constant: '<Root>/Constant6'
@@ -2114,7 +2122,7 @@ void uln_rti_qpon_linux_step(void)
   /*  */
   /*  All rights reserved */
   /* '<S1>:1:10' */
-  memcpy(&rtb_znew[0], &uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0], 40U * sizeof
+  memcpy(&rtb_znew[0], &uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0], 145U * sizeof
          (real_T));
 
   /*  Expansion step: w2+ = w2 + d + C*deltax0 + E*dz */
@@ -2125,37 +2133,38 @@ void uln_rti_qpon_linux_step(void)
   }
 
   /* '<S1>:1:14' */
-  for (i_0 = 0; i_0 < 10; i_0++) {
-    EtQbar_0[i_0] = rtb_znew[(int32_T)
+  for (i_0 = 0; i_0 < 40; i_0++) {
+    EtQbar[i_0] = rtb_znew[(int32_T)
       uln_rti_qpon_linux_ConstP.Constant7_Value[i_0] - 1] +
       rtb_qpOASES_wrp_o1[i_0];
   }
 
-  for (i_0 = 0; i_0 < 10; i_0++) {
+  for (i_0 = 0; i_0 < 40; i_0++) {
     rtb_znew[(int32_T)uln_rti_qpon_linux_ConstP.Constant7_Value[i_0] - 1] =
-      EtQbar_0[i_0];
+      EtQbar[i_0];
   }
 
   /* '<S1>:1:15' */
-  for (i_0 = 0; i_0 < 25; i_0++) {
-    tmp_3 = 0.0;
+  for (i_0 = 0; i_0 < 100; i_0++) {
+    tmp_2 = 0.0;
     for (i_4 = 0; i_4 < 5; i_4++) {
-      tmp_3 += rtb_C[25 * i_4 + i_0] * rtb_deltax0[i_4];
+      tmp_2 += rtb_C[100 * i_4 + i_0] * rtb_deltax0[i_4];
     }
 
-    rtb_w2_0[i_0] = (rtb_w2[i_0] + rtb_d[i_0]) + tmp_3;
+    rtb_w2_0[i_0] = (rtb_w2[i_0] + rtb_d[i_0]) + tmp_2;
   }
 
-  for (i_0 = 0; i_0 < 25; i_0++) {
-    dgdz_0[i_0] = 0.0;
-    for (i_4 = 0; i_4 < 10; i_4++) {
-      dgdz_0[i_0] += rtb_E[25 * i_4 + i_0] * rtb_qpOASES_wrp_o1[i_4];
+  for (i_0 = 0; i_0 < 100; i_0++) {
+    rtb_d[i_0] = 0.0;
+    for (i_4 = 0; i_4 < 40; i_4++) {
+      rtb_d[i_0] += uln_rti_qpon_linux_B.E[100 * i_4 + i_0] *
+        rtb_qpOASES_wrp_o1[i_4];
     }
   }
 
-  for (i_0 = 0; i_0 < 25; i_0++) {
+  for (i_0 = 0; i_0 < 100; i_0++) {
     rtb_znew[(int32_T)uln_rti_qpon_linux_ConstP.Constant8_Value[i_0] - 1] =
-      rtb_w2_0[i_0] + dgdz_0[i_0];
+      rtb_w2_0[i_0] + rtb_d[i_0];
   }
 
   /* Outport: '<Root>/uOpt' incorporates:
@@ -2165,7 +2174,7 @@ void uln_rti_qpon_linux_step(void)
   /*  Output the optimal controls */
   /* '<S1>:1:18' */
   /*  RTI step complete */
-  for (i = 0; i < 10; i++) {
+  for (i = 0; i < 40; i++) {
     uln_rti_qpon_linux_Y.uOpt[i] = rtb_znew[(int32_T)
       uln_rti_qpon_linux_ConstP.Constant7_Value[i] - 1];
   }
@@ -2173,7 +2182,7 @@ void uln_rti_qpon_linux_step(void)
   /* End of Outport: '<Root>/uOpt' */
 
   /* Update for UnitDelay: '<Root>/Unit Delay' */
-  memcpy(&uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0], &rtb_znew[0], 40U * sizeof
+  memcpy(&uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0], &rtb_znew[0], 145U * sizeof
          (real_T));
 }
 
@@ -2185,7 +2194,7 @@ void uln_rti_qpon_linux_initialize(void)
 
   /* InitializeConditions for UnitDelay: '<Root>/Unit Delay' */
   memcpy(&uln_rti_qpon_linux_DW.UnitDelay_DSTATE[0],
-         &uln_rti_qpon_linux_ConstP.UnitDelay_InitialCon[0], 40U * sizeof(real_T));
+         &uln_rti_qpon_linux_ConstP.UnitDelay_InitialCo[0], 145U * sizeof(real_T));
 }
 
 /* Model terminate function */

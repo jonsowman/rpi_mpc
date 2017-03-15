@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'uln_rti_qpon_linux'.
  *
- * Model version                  : 1.260
+ * Model version                  : 1.266
  * Simulink Coder version         : 8.7 (R2014b) 08-Sep-2014
- * C/C++ source code generated on : Wed Mar 15 09:26:17 2017
+ * C/C++ source code generated on : Wed Mar 15 13:27:36 2017
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -38,9 +38,18 @@
 /* user code (top of header file) */
 #include "qpOASES_wrapper.h"
 
+/* Block signals (auto storage) */
+typedef struct {
+  real_T dv0[5800];
+  real_T E[4000];                      /* '<Root>/RTI_prepare' */
+  real_T EtQbar[4000];
+  real_T Ac[1600];                     /* '<Root>/RTI_prepare' */
+  real_T dgdz[700];
+} B_uln_rti_qpon_linux_T;
+
 /* Block states (auto storage) for system '<Root>' */
 typedef struct {
-  real_T UnitDelay_DSTATE[40];         /* '<Root>/Unit Delay' */
+  real_T UnitDelay_DSTATE[145];        /* '<Root>/Unit Delay' */
 } DW_uln_rti_qpon_linux_T;
 
 /* Constant parameters (auto storage) */
@@ -48,12 +57,12 @@ typedef struct {
   /* Expression: ULN_CONST_zInitial
    * Referenced by: '<Root>/Unit Delay'
    */
-  real_T UnitDelay_InitialCon[40];
+  real_T UnitDelay_InitialCo[145];
 
   /* Expression: ULN_CONST_zref
    * Referenced by: '<Root>/Constant11'
    */
-  real_T Constant11_Value[40];
+  real_T Constant11_Value[145];
 
   /* Expression: ULN_MODEL_p
    * Referenced by: '<Root>/Constant23'
@@ -63,12 +72,12 @@ typedef struct {
   /* Expression: ULN_CONST_HESSIAN_COND
    * Referenced by: '<Root>/Constant12'
    */
-  real_T Constant12_Value[1600];
+  real_T Constant12_Value[21025];
 
   /* Expression: ULN_CONST_vx
    * Referenced by: '<Root>/Constant13'
    */
-  real_T Constant13_Value[1200];
+  real_T Constant13_Value[15225];
 
   /* Expression: ULN_CONST_vx1
    * Referenced by: '<Root>/Constant17'
@@ -78,27 +87,27 @@ typedef struct {
   /* Expression: ULN_CONST_vu
    * Referenced by: '<Root>/Constant20'
    */
-  real_T Constant20_Value[400];
+  real_T Constant20_Value[5800];
 
   /* Expression: ULN_CONST_Qbar
    * Referenced by: '<Root>/Constant21'
    */
-  real_T Constant21_Value[625];
+  real_T Constant21_Value[10000];
 
   /* Expression: ULN_CONST_Rbar
    * Referenced by: '<Root>/Constant22'
    */
-  real_T Constant22_Value[100];
+  real_T Constant22_Value[1600];
 
   /* Expression: ULN_CONST_sqp_umin
    * Referenced by: '<Root>/Constant18'
    */
-  real_T Constant18_Value[10];
+  real_T Constant18_Value[40];
 
   /* Expression: ULN_CONST_sqp_umax
    * Referenced by: '<Root>/Constant19'
    */
-  real_T Constant19_Value[10];
+  real_T Constant19_Value[40];
 
   /* Expression: ULN_CONST_hBnx
    * Referenced by: '<Root>/Constant15'
@@ -108,7 +117,7 @@ typedef struct {
   /* Expression: ULN_CONST_guA_prep
    * Referenced by: '<Root>/Constant4'
    */
-  real_T Constant4_Value[25];
+  real_T Constant4_Value[100];
 
   /* Expression: ULN_CONST_vx0_z
    * Referenced by: '<Root>/Constant6'
@@ -118,12 +127,12 @@ typedef struct {
   /* Expression: ULN_CONST_vu_z
    * Referenced by: '<Root>/Constant7'
    */
-  real_T Constant7_Value[10];
+  real_T Constant7_Value[40];
 
   /* Expression: ULN_CONST_vx_z
    * Referenced by: '<Root>/Constant8'
    */
-  real_T Constant8_Value[25];
+  real_T Constant8_Value[100];
 } ConstP_uln_rti_qpon_linux_T;
 
 /* External inputs (root inport signals with auto storage) */
@@ -133,7 +142,7 @@ typedef struct {
 
 /* External outputs (root outports fed by signals with auto storage) */
 typedef struct {
-  real_T uOpt[10];                     /* '<Root>/uOpt' */
+  real_T uOpt[40];                     /* '<Root>/uOpt' */
   real_T obj;                          /* '<Root>/obj' */
   int32_T status;                      /* '<Root>/status' */
 } ExtY_uln_rti_qpon_linux_T;
@@ -142,6 +151,9 @@ typedef struct {
 struct tag_RTM_uln_rti_qpon_linux_T {
   const char_T * volatile errorStatus;
 };
+
+/* Block signals (auto storage) */
+extern B_uln_rti_qpon_linux_T uln_rti_qpon_linux_B;
 
 /* Block states (auto storage) */
 extern DW_uln_rti_qpon_linux_T uln_rti_qpon_linux_DW;

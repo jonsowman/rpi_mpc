@@ -44,7 +44,7 @@ void qpOASES_uln_start()
 void qpOASES_uln_run(double *H, double *g, double *A, double *lb, double *ub, double *lbA, double *ubA, int nV, int nC, double *xOpt, double *yOpt, double *obj, int *status)
 {
     /* Solve QP, hotstarting if required */
-    nWSR = 20;
+    nWSR = 200;
     if( first_run )
     {
         SQProblem_setup( nV, nC, HST_UNKNOWN );
