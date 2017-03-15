@@ -18,10 +18,12 @@
 #include <stdio.h>                     /* This ert_main.c example uses printf/fflush */
 #include "uln_rti_qpon_linux.h"        /* Model's header file */
 #include "rtwtypes.h"
-#include <time.h>
+#include <omp.h>
 
 extern ExtU_uln_rti_qpon_linux_T uln_rti_qpon_linux_U;
 extern ExtY_uln_rti_qpon_linux_T uln_rti_qpon_linux_Y;
+
+double tstart, tend;
 
 /*
  * Associating rt_OneStep with a real-time clock or interrupt service routine
@@ -101,12 +103,11 @@ int_T main(int_T argc, const char *argv[])
   fflush((NULL));
   while (rtmGetErrorStatus(uln_rti_qpon_linux_M) == (NULL)) {
     /*  Perform other application tasks here */
-    clock_t start = clock(), diff;
+    tstart = omp_get_wtime();
     rt_OneStep();
-    diff = clock() - start;
+    tend = omp_get_wtime();
 
-    double sec = (double)diff / CLOCKS_PER_SEC;
-    printf("Time taken %.2f milliseconds\n", sec*1e3);
+    printf("Time taken %.2f milliseconds\n", (tend-tstart)*1e3);
     printf("uOpt = [%f %f], status=%d, obj=%.2f\n", 
             uln_rti_qpon_linux_Y.uOpt[0],
             uln_rti_qpon_linux_Y.uOpt[1],
