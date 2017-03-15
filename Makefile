@@ -1,11 +1,11 @@
-# Jon Sowman 2016
+# Jon Sowman 2016-17
 # jonathan.sowman@ricardo.com
 # November 2016
 #
-# This file part of the Ultra-low NOx (ULN) project
+# This file is part of the Ultra-low NOx (ULN) project and EngD project
 #
 # All rights reserved
-# Ricardo 2016
+# Ricardo 2016-17
 #
 
 CC = gcc
