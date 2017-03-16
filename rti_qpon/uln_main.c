@@ -19,6 +19,10 @@
 #include "uln_rti_qpon_linux.h"        /* Model's header file */
 #include "rtwtypes.h"
 #include <omp.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define CONTROL_TIMESTEP 0.25 /* In seconds */
 
@@ -79,52 +83,94 @@ void rt_OneStep(void)
  */
 int_T main(int_T argc, const char *argv[])
 {
-  /* Unused arguments */
-  (void)(argc);
-  (void)(argv);
+    /* Unused arguments */
+    (void)(argc);
+    (void)(argv);
 
-  /* Initialize model */
-  uln_rti_qpon_linux_initialize();
+    /* UDP stuff */
+    int udpSocket, nBytes;
+    char buffer[1024];
+    struct sockaddr_in serverAddr, clientAddr;
+    struct sockaddr_storage serverStorage;
+    socklen_t addr_size, client_addr_size;
+    int i;
+    float *fp;
+    float uOpt[2];
 
-  /* Model states */
-  uln_rti_qpon_linux_U.x0[0] = 0.022f;
-  uln_rti_qpon_linux_U.x0[1] = 0.022f;
-  uln_rti_qpon_linux_U.x0[2] = 0.0f;
-  uln_rti_qpon_linux_U.x0[3] = 0.001f;
-  uln_rti_qpon_linux_U.x0[4] = 423.0f;
+    /*Create UDP socket*/
+    udpSocket = socket(PF_INET, SOCK_DGRAM, 0);
 
-  /* Attach rt_OneStep to a timer or interrupt service routine with
-   * period 0.1 seconds (the model's base sample time) here.  The
-   * call syntax for rt_OneStep is
-   *
-   *  rt_OneStep();
-   */
-  printf("Warning: The simulation will run forever. "
-         "Generated ERT main won't simulate model step behavior. "
-         "To change this behavior select the 'MAT-file logging' option.\n");
-  fflush((NULL));
-  while (rtmGetErrorStatus(uln_rti_qpon_linux_M) == (NULL)) {
-    /*  Perform other application tasks here */
-    tstart = omp_get_wtime();
-    rt_OneStep();
-    tend = omp_get_wtime();
+    /*Configure settings in address struct*/
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(9090);
+    serverAddr.sin_addr.s_addr = INADDR_ANY;
+    memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);  
 
-    printf("Time taken %.2f milliseconds (%.1f%%)\n", 
-            (tend-tstart)*1e3,
-            (tend-tstart)/CONTROL_TIMESTEP*100);
-    printf("uOpt = [%.4f %.0f], status=%d, obj=%.2f\n", 
-            uln_rti_qpon_linux_Y.uOpt[0],
-            uln_rti_qpon_linux_Y.uOpt[1],
-            uln_rti_qpon_linux_Y.status,
-            uln_rti_qpon_linux_Y.obj);
-    sleep(CONTROL_TIMESTEP);
-  }
+    /*Bind socket with address struct*/
+    bind(udpSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
 
-  /* Disable rt_OneStep() here */
+    /*Initialize size variable to be used later on*/
+    addr_size = sizeof serverStorage;
 
-  /* Terminate model */
-  uln_rti_qpon_linux_terminate();
-  return 0;
+    /* Initialize model */
+    uln_rti_qpon_linux_initialize();
+
+    /* Attach rt_OneStep to a timer or interrupt service routine with
+     * period 0.1 seconds (the model's base sample time) here.  The
+     * call syntax for rt_OneStep is
+     *
+     *  rt_OneStep();
+     */
+    printf("Warning: The simulation will run forever. "
+            "Generated ERT main won't simulate model step behavior. "
+            "To change this behavior select the 'MAT-file logging' option.\n");
+    fflush((NULL));
+    while (rtmGetErrorStatus(uln_rti_qpon_linux_M) == (NULL)) {
+        /* Model states */
+        nBytes = recvfrom(udpSocket,buffer,1024,0,
+                (struct sockaddr *)&serverStorage, &addr_size);
+        fp = (float *)buffer;
+        uln_rti_qpon_linux_U.x0[0] = (real_T)fp[0];
+        uln_rti_qpon_linux_U.x0[1] = (real_T)fp[1];
+        uln_rti_qpon_linux_U.x0[2] = (real_T)fp[2];
+        uln_rti_qpon_linux_U.x0[3] = (real_T)fp[3];
+        uln_rti_qpon_linux_U.x0[4] = (real_T)fp[4];
+        printf("Got x0 = [%f %f %f %f %f]\n", 
+                uln_rti_qpon_linux_U.x0[0],
+                uln_rti_qpon_linux_U.x0[1],
+                uln_rti_qpon_linux_U.x0[2],
+                uln_rti_qpon_linux_U.x0[3],
+                uln_rti_qpon_linux_U.x0[4]);
+
+        /*  Perform other application tasks here */
+        tstart = omp_get_wtime();
+        rt_OneStep();
+        tend = omp_get_wtime();
+
+        printf("Time taken %.2f milliseconds (%.1f%%)\n", 
+                (tend-tstart)*1e3,
+                (tend-tstart)/CONTROL_TIMESTEP*100);
+        printf("uOpt = [%.4f %.0f], status=%d, obj=%.2f\n", 
+                uln_rti_qpon_linux_Y.uOpt[0],
+                uln_rti_qpon_linux_Y.uOpt[1],
+                uln_rti_qpon_linux_Y.status,
+                uln_rti_qpon_linux_Y.obj);
+
+        /* Return uOpt to host */
+        uOpt[0] = uln_rti_qpon_linux_Y.uOpt[0];
+        uOpt[1] = uln_rti_qpon_linux_Y.uOpt[1];
+        sendto(udpSocket, uOpt, 2*sizeof(float), 0, 
+                (struct sockaddr*) &serverStorage, addr_size);
+
+        /* Wait until next */
+        sleep(CONTROL_TIMESTEP);
+    }
+
+    /* Disable rt_OneStep() here */
+
+    /* Terminate model */
+    uln_rti_qpon_linux_terminate();
+    return 0;
 }
 
 /*
