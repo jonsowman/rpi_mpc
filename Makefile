@@ -18,19 +18,21 @@ ERT_OUTPUT = uln_rti_qpon_linux_ert_rtw
 EMBEDDED_CODER = R2014b
 
 # Include sources
-ULN_DIR = $(MODEL)/.uln_build
+QPOASES_WRP_DIR = $(MODEL)/.uln_build
 ERT_DIR = $(MODEL)/$(ERT_OUTPUT)
+ULN_DIR = $(MODEL)
 
 # Where is the qpOASES library?
 LIB_DIRS = -L/home/pi/qpOASES-3.2.0/bin
 
 # List all the include directories
-INCLUDE_DIRS = -I$(ULN_DIR) -I$(EMBEDDED_CODER)/extern/include -I$(EMBEDDED_CODER)/rtw/c/src/ -I$(EMBEDDED_CODER)/simulink/include/
+INCLUDE_DIRS = -I$(QPOASES_WRP_DIR) -I$(ERT_DIR) -I$(EMBEDDED_CODER)/extern/include -I$(EMBEDDED_CODER)/rtw/c/src/ -I$(EMBEDDED_CODER)/simulink/include/
 
 # Enumerate .c sources
 ULN_SRC = $(wildcard $(ULN_DIR)/*.c)
+QPO_SRC = $(wildcard $(QPOASES_WRP_DIR)/*.c)
 ERT_SRC = $(filter-out $(ERT_DIR)/ert_main.c, $(wildcard $(ERT_DIR)/*.c))
-SOURCES = $(ERT_SRC) $(ULN_SRC)
+SOURCES = $(ULN_SRC) $(ERT_SRC) $(QPO_SRC)
 OBJS = $(SOURCES:.c=.o)
 
 # Link against which libs?
