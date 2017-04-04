@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'uln_rti_linux'.
  *
- * Model version                  : 1.197
+ * Model version                  : 1.207
  * Simulink Coder version         : 8.7 (R2014b) 08-Sep-2014
- * C/C++ source code generated on : Tue Apr 04 13:00:13 2017
+ * C/C++ source code generated on : Tue Apr 04 15:24:46 2017
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: 32-bit Generic

@@ -134,7 +134,7 @@ int_T main(int_T argc, const char *argv[])
         uln_rti_linux_U.x0[1] = (real_T)fp[1];
         uln_rti_linux_U.x0[2] = (real_T)fp[2];
         uln_rti_linux_U.x0[3] = (real_T)fp[3];
-        printf("Got x0 = [%f %f %f %f %f]\n", 
+        printf("Got x0 = [%f %f %f %f]\n", 
                 uln_rti_linux_U.x0[0],
                 uln_rti_linux_U.x0[1],
                 uln_rti_linux_U.x0[2],

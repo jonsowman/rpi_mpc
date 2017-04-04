@@ -14,8 +14,6 @@ FLAGS = -Wall -Wno-unused-function -fopenmp
 # All of the model is in this directory
 MODEL = uln_rti_linux
 ERT_OUTPUT = uln_rti_linux_ert_rtw
-# This directory contains all the fluff from Embedded Coder/Simulink
-#EMBEDDED_CODER = R2014b
 
 # Include sources
 QPOASES_DIR = $(MODEL)/.uln_build

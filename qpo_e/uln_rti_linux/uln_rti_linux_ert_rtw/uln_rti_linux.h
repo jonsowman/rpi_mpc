@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'uln_rti_linux'.
  *
- * Model version                  : 1.197
+ * Model version                  : 1.207
  * Simulink Coder version         : 8.7 (R2014b) 08-Sep-2014
- * C/C++ source code generated on : Tue Apr 04 13:00:13 2017
+ * C/C++ source code generated on : Tue Apr 04 15:24:46 2017
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -38,17 +38,31 @@
 /* user code (top of header file) */
 #include "qpOASES_e.h"
 
+/* Block signals (auto storage) */
+typedef struct {
+  real_T dv0[4620];
+  real_T E[3600];                      /* '<Root>/RTI_prepare' */
+  real_T EtQbar[3600];
+  real_T Ac[900];                      /* '<Root>/RTI_prepare' */
+} B_uln_rti_linux_T;
+
 /* Block states (auto storage) for system '<Root>' */
 typedef struct {
-  real_T z_store_DSTATE[29];           /* '<Root>/z_store' */
+  real_T z_store_DSTATE[154];          /* '<Root>/z_store' */
 } DW_uln_rti_linux_T;
+
+/* Invariant block signals (auto storage) */
+typedef struct {
+  const int16_T DataTypeConversion;    /* '<Root>/Data Type Conversion' */
+  const int16_T DataTypeConversion1;   /* '<Root>/Data Type Conversion1' */
+} ConstB_uln_rti_linux_T;
 
 /* Constant parameters (auto storage) */
 typedef struct {
   /* Expression: ULN_CONST_zInitial
    * Referenced by: '<Root>/z_store'
    */
-  real_T z_store_InitialCondi[29];
+  real_T z_store_InitialCond[154];
 
   /* Expression: ULN_MODEL_p
    * Referenced by: '<Root>/Constant23'
@@ -58,12 +72,12 @@ typedef struct {
   /* Expression: ULN_CONST_HESSIAN_COND
    * Referenced by: '<Root>/Constant12'
    */
-  real_T Constant12_Value[841];
+  real_T Constant12_Value[23716];
 
   /* Expression: ULN_CONST_vx
    * Referenced by: '<Root>/Constant13'
    */
-  real_T Constant13_Value[696];
+  real_T Constant13_Value[19096];
 
   /* Expression: ULN_CONST_vx1
    * Referenced by: '<Root>/Constant17'
@@ -73,17 +87,17 @@ typedef struct {
   /* Expression: ULN_CONST_vu
    * Referenced by: '<Root>/Constant20'
    */
-  real_T Constant20_Value[145];
+  real_T Constant20_Value[4620];
 
   /* Expression: ULN_CONST_Qbar
    * Referenced by: '<Root>/Constant21'
    */
-  real_T Constant21_Value[400];
+  real_T Constant21_Value[14400];
 
   /* Expression: ULN_CONST_Rbar
    * Referenced by: '<Root>/Constant22'
    */
-  real_T Constant22_Value[25];
+  real_T Constant22_Value[900];
 
   /* Expression: ULN_CONST_hBnx
    * Referenced by: '<Root>/Constant15'
@@ -93,17 +107,17 @@ typedef struct {
   /* Expression: ULN_CONST_guA_prep
    * Referenced by: '<Root>/Constant4'
    */
-  real_T Constant4_Value[20];
+  real_T Constant4_Value[120];
 
-  /* Expression: ULN_CONST_vu_z
+  /* Computed Parameter: Constant7_Value
    * Referenced by: '<Root>/Constant7'
    */
-  real_T Constant7_Value[5];
+  int16_T Constant7_Value[30];
 
-  /* Expression: ULN_CONST_vx_z
+  /* Computed Parameter: Constant8_Value
    * Referenced by: '<Root>/Constant8'
    */
-  real_T Constant8_Value[20];
+  int16_T Constant8_Value[120];
 } ConstP_uln_rti_linux_T;
 
 /* External inputs (root inport signals with auto storage) */
@@ -113,13 +127,16 @@ typedef struct {
 
 /* External outputs (root outports fed by signals with auto storage) */
 typedef struct {
-  real_T uOpt[5];                      /* '<Root>/uOpt' */
+  real_T uOpt[30];                     /* '<Root>/uOpt' */
 } ExtY_uln_rti_linux_T;
 
 /* Real-time Model Data Structure */
 struct tag_RTM_uln_rti_linux_T {
   const char_T * volatile errorStatus;
 };
+
+/* Block signals (auto storage) */
+extern B_uln_rti_linux_T uln_rti_linux_B;
 
 /* Block states (auto storage) */
 extern DW_uln_rti_linux_T uln_rti_linux_DW;
@@ -129,6 +146,7 @@ extern ExtU_uln_rti_linux_T uln_rti_linux_U;
 
 /* External outputs (root outports fed by signals with auto storage) */
 extern ExtY_uln_rti_linux_T uln_rti_linux_Y;
+extern const ConstB_uln_rti_linux_T uln_rti_linux_ConstB;/* constant block i/o */
 
 /* Constant parameters (auto storage) */
 extern const ConstP_uln_rti_linux_T uln_rti_linux_ConstP;

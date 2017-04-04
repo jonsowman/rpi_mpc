@@ -1,5 +1,8 @@
 /**
- * Jon Sowman 2016
+ * Jon Sowman 2016-17
+ *
+ * This file is part of the Ultra-Low NOx project. 
+ *
  * js29
  * j.sowman@soton.ac.uk
  * jonathan.sowman@ricardo.com
@@ -9,14 +12,7 @@
 
 USING_NAMESPACE_QPOASES
 
-/* Setup data of first QP. */
-/*real_t H[2*2] = { 1.0, 0.0, 0.0, 0.5 };
-real_t A[1*2] = { 1.0, 1.0 };
-real_t g[2] = { 1.5, 1.0 };
-real_t lb[2] = { 0.5, -2.0 };
-real_t ub[2] = { 5.0, 2.0 };
-real_t lbA[1] = { -1.0 };
-real_t ubA[1] = { 2.0 };*/
+#define __SUPPRESSANYOUTPUT __
 
 /* Setting up QProblem object. */
 static Options options;
@@ -27,19 +23,28 @@ int nWSR;
 
 void rqp_start(void)
 {
-	QProblemCON( &example,5,20,HST_POSDEF );
-	Options_setToDefault( &options );
-	options.printLevel = PL_NONE;
-	QProblem_setOptions( &example,options );
-    return;
+	Options_setToMPC( &options );
+    QProblem_setOptions( &example,options );
 }
 
-void rqp_run(double *H, double *g, double *A, double *lb, double *ub, double *lbA, double *ubA, double *xOpt)
+void rqp_run(double *H, double *g, double *A, double *lb, double *ub, 
+        double *lbA, double *ubA, int nV, int nC, double *xOpt, 
+        double *yOpt, double *obj)
 {
-    /* Solve first QP. */
-	nWSR = 20;
+    /* Set up QP */
+    QProblem_setPrintLevel( &example, PL_NONE );
+    QProblemCON( &example, nV, nC, HST_POSDEF ); 
+    
+    /* Solve  QP. */
+	nWSR = 200;
 	retval = QProblem_init( &example,H,g,A,lb,ub,lbA,ubA,&nWSR,0 );
 
-	/* Get and print solution of first QP. */	
+	/* Get primal solution of QP. */	
 	QProblem_getPrimalSolution( &example, xOpt );
+    
+    /* Get dual solution */
+    QProblem_getDualSolution( &example, yOpt );
+    
+    /* Get objective value */
+    *obj = QProblem_getObjVal( &example );  
 }
