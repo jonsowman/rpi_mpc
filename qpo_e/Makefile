@@ -9,7 +9,7 @@
 #
 
 CC = gcc
-FLAGS = -Wall -Wno-unused-function -fopenmp
+FLAGS = -Wall -Wno-unused-function -fopenmp -D__SUPPRESSANYOUTPUT__
 
 # All of the model is in this directory
 MODEL = uln_rti_linux
